@@ -1,0 +1,48 @@
+const songs = [
+    "Back From The Edge - Patrick Hastie .mp3",
+    "We Are Young - Janelle Monáe.mp3",
+    "We Are The Champions - Queen.mp3",
+    "The Foggy Dew & Hypnotize Remix - Notorious BIG.mp3",
+    "Forever - Drake.mp3",
+];
+
+const player = document.getElementById("player");
+
+function createSongList() {
+    const list = document.createElement("ol");
+    for(let i = 0; i < songs.length; i++) {
+        const item = document.createElement("li");
+        item.appendChild(document.createTextNode(songs[i]));
+        list.appendChild(item);
+    }
+    return list;
+}
+
+const songList = document.getElementById("songList");
+songList.appendChild(createSongList());
+
+songList.onclick = function(e) {
+    const source = document.getElementById("source");
+    source.src = "songs/" + e.target.innerText;
+
+    document.querySelector("#currentSong").innerText = `Now playing: ${e.target.innerText}`;
+
+    player.load();
+    player.play();
+}
+
+function playAudio() {
+    if(player.readyState){
+        player.play();
+    }
+}
+
+function pauseAudio() {
+    player.pause();
+}
+
+const slider = document.getElementById("volumeSlider");
+slider.oninput = function (e) {
+    const volume = e.target.value;
+    player.volume = volume;
+}
